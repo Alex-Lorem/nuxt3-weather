@@ -1,0 +1,114 @@
+// Default
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*, *:after, *:before {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100vh;
+}
+
+* {
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #eee;
+    border: none;
+    border-radius: var(--border-radius-default);
+  }
+}
+
+body {
+  font-family: var(--font-regular), Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--background-page);
+  font-size: var(--font-size-basic);
+  color: var(--black);
+}
+
+ul, li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: var(--grey);
+}
+
+button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  font-family: var(--font-bold);
+}
+
+input {
+  border: none;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type='number'],
+input[type="number"]:hover,
+input[type="number"]:focus {
+  appearance: none;
+  -moz-appearance: textfield;
+}
+
+.input-container {
+  svg {
+    max-width: 20px;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-medium);
+  font-weight: 500;
+  font-size: var(--font-size-title);
+  line-height: var(--line-height-basic);
+}
+
+svg {
+  width: 100%;
+}
+
+// *** End of global styles
+
+
+// Transitions
+
+
+.fade-fast-enter-active,
+.fade-fast-leave-active {
+  @include transitionDefault;
+}
+
+.fade-fast-enter-from,
+.fade-fast-leave-to {
+  transform: translate(0, 30px);
+  opacity: 0;
+}
+
+.fade-slow-enter-active,
+.fade-slow-leave-active {
+  @include transitionSmooth;
+}
+
+.fade-slow-enter-from,
+.fade-slow-leave-to {
+  transform: translate(0, 230px);
+  opacity: 0;
+}

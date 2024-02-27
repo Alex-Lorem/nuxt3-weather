@@ -1,0 +1,37 @@
+// Colors
+
+:root {
+  --background-page: #f8f8f8;
+  --white: #fff;
+  --black: #00133F;
+  --grey: #F8F8F8;
+  --grey-placeholder-text: #b3b3b3;
+  --green-light: #70BE70;
+  --red: #FF4F4F;
+}
+
+// Elements
+
+:root {
+  --crytical-z-index: 999;
+}
+
+// Shadows & borders
+
+:root {
+  --default-shadow: 4px 4px 14px 0px rgba(212, 212, 212, 0.10);
+  --default-border: 1px solid #eee;
+  --border-radius-default: 7px;
+}
+
+// Fonts
+
+:root {
+  --font-regular: 'Ubuntu Regular';
+  --font-medium: 'Ubuntu Medium';
+  --line-height-basic: 135%;
+  --font-size-basic: 16px;
+  --font-size-18: 18px;
+  --font-size-24: 24px;
+  --font-size-34: 34px;
+}

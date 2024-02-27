@@ -1,0 +1,55 @@
+@import "assets/scss/_base";
+@import "assets/scss/_fonts";
+
+.wrapper {
+  min-height: 100vh;
+  background-color: var(--background-page);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 150px;
+  gap: 50px;
+}
+.search {
+  position: absolute;
+  top: 0;
+  margin: 50px 0;
+  width: 320px;
+  height: 52px;
+  padding: 12px 32px;
+  display: flex;
+  align-items: center;
+  background: white;
+  box-shadow: var(--default-shadow);
+  border: var(--default-border);
+  img {
+    width: 15px;
+    color: white;
+    margin-right: 5px;
+  }
+  input {
+    &::placeholder{
+      color: var(--grey-placeholder-text);
+    }
+
+    margin-right: 15px;
+    outline: none;
+    font-size: var(--font-size-basic);
+    width: 100%;
+    height: 25px;
+  }
+}
+.search-button {
+  padding: 5px 12px;
+  box-shadow: var(--default-shadow);
+  border: var(--default-border);
+}

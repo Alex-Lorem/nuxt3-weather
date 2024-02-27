@@ -1,0 +1,46 @@
+// *** Transitions
+
+@mixin transitionDefault {
+  transition: .44s ease;
+}
+
+@mixin transitionSmooth {
+  transition: .68s cubic-bezier(0.28, 0.11, 0.32, 1);
+}
+
+@mixin animation-opacity-to-top {
+  opacity: 0;
+  transform: translate(-50%, 30px);
+}
+
+// *** Positions
+
+@mixin posAbsoluteSides {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+@mixin posAbsoluteCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Positions
+
+@mixin plusCircle {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 50%;
+    height: 50%;
+    color: var(--white);
+  }
+}
+
