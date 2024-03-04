@@ -8,44 +8,54 @@
       </transition>
     </div>
     <div class="container">
-      <template v-for="address in addresses" :key="address">
-        <x-widget :address="address" />
+      <template v-for="address in weather.addresses" :key="address">
+        <x-widget :address="address"/>
       </template>
     </div>
-    <x-alert />
+    <x-alert/>
   </div>
 </template>
 <script setup>
 const {$event_listen, $event_off} = useNuxtApp()
 
 //console.log(navigator.language || navigator.userLanguage)
-let addresses = ref([])
+let weather = ref({})
 let search = ref('')
-onMounted( () => {
-  const weather = localStorage.getItem('weather')
-  if(weather){
-    addresses.value = weather.addresses
-  } else {
-    addresses.value = ['Los Angeles']
+
+watch(weather, (value) => {
+      localStorage.setItem('weather', JSON.stringify(value))
+    },
+    {
+      deep: true
+    }
+)
+
+onMounted(() => {
+  weather.value = JSON.parse(localStorage.getItem('weather'))
+  if (!weather.value?.addresses?.length) {
+    weather.value = {}
+    weather.value.addresses = ['Los Angeles']
   }
 
   $event_listen("remove_widget", ({address}) => {
-    setTimeout(()=>{
-      console.log('hete')
-      const index = addresses.value.indexOf(address)
-      addresses.value.splice(index, 1)
-    }, 800)
+    setTimeout(() => {
+      const index = weather.value.addresses.indexOf(address)
+      weather.value.addresses.splice(index, 1)
+    }, 1000)
   });
 })
 
-//functions
-
-function addWidget(){
-  addresses.value.push(search.value)
-  search.value = ''
-}
-onUnmounted(()=>{
+onUnmounted(() => {
   $event_off("remove_widget")
 })
+
+
+//functions
+
+function addWidget() {
+  weather.value.addresses.push(search.value)
+  search.value = ''
+}
+
 </script>
 <style src="./globals.scss" lang="scss"/>

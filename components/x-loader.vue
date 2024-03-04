@@ -14,7 +14,7 @@
 .x-loader {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 90%;
   height: 100%;
 }
 
