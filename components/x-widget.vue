@@ -1,4 +1,5 @@
 <template>
+  <div class="x-widget-wrapper" v-show="showWidget">
   <transition name="fade-slow">
     <div class="x-widget" v-show="showWidget" :class="{'x-widget-error': error}">
       <img class="x-widget-close" @click="showWidget = false;$event_emit('remove_widget', {address})"
@@ -7,6 +8,8 @@
         <x-loader/>
       </template>
       <template v-if="data && !loading">
+        <transition name="fade-slow">
+
         <div class="x-widget-front" v-show="showFrontside">
           <h3 class="x-widget-city">
             {{ data.location.name }}/{{ data.location.region }}
@@ -26,7 +29,7 @@
                 </div>
               </div>
               <div class="x-widget-more" @click="showFrontside = false; showBackside = true">
-                Check weekly forecast
+                Check 3 day forecast
               </div>
             </div>
             <div class="x-widget-right">
@@ -37,6 +40,7 @@
             </div>
           </div>
         </div>
+        </transition>
         <transition name="fade-slow">
           <div class="x-widget-back" v-show="showBackside">
             <h3 class="x-widget-city">
@@ -45,11 +49,17 @@
             <div class="forecast">
                 <div class="forecast-day" v-for="{day, date_epoch} in data.forecast.forecastday">
                   <div class="forecast-day-name">
+                    <x-animation-icon :weather_code="day.condition.code" :is_day="true"/>
                     {{convertDay(date_epoch)}}
                   </div>
-                  <x-animation-icon :weather_code="day.condition.code" :is_day="true"/>
-
-                    {{day.maxtemp_c}}
+                  <div class="forecast-day-avg">
+                   <div class="forecast-day-avg-day">
+                     Day {{day.maxtemp_c}} °С
+                   </div>
+                   <div>
+                     Night {{day.mintemp_c}} °С
+                   </div>
+                  </div>
                 </div>
             </div>
             <div class="x-widget-more" @click="showBackside = false; showFrontside = true">
@@ -70,6 +80,7 @@
       </template>
     </div>
   </transition>
+  </div>
 </template>
 <script setup>
 import {CONSTANTS} from "@/CONSTANTS.js";
@@ -83,7 +94,7 @@ let showFrontside = ref(true)
 let loading = ref(true)
 let error = ref(false)
 
-const {data, pending} = await useLazyFetch(CONSTANTS.WEB_API_URL + getDays(7) + getAddress(address), {
+const {data, pending} = await useLazyFetch(CONSTANTS.WEB_API_URL + getDays(3) + getAddress(address), {
   onResponseError({response}) {
     if (response.status === 400) {
       setTimeout(() => {
@@ -111,7 +122,7 @@ watch(pending, (value) => {
 const convertDay = (seconds) => {
   const day = new Date(0)
   day.setUTCSeconds(seconds)
-  return day.toLocaleDateString('en', { weekday: 'short' })
+  return day.toLocaleDateString('en', { weekday: 'long' })
 }
 
 onMounted(async () => {
@@ -216,18 +227,40 @@ onMounted(async () => {
 }
 .forecast {
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 100%;
 }
 .forecast-day {
   width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  img {
+    width: 40px;
+  }
 }
 .x-widget-back {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.x-widget-wrapper {
+  width: 435px;
+  height: 255px;
+  position: relative;
+  overflow: hidden;
+}
+.forecast-day-avg {
+  font-size: 14px;
+  display: flex;
+}
+.forecast-day-name {
+  display: flex;
+  align-items: center;
+}
+.forecast-day-avg-day {
+  margin-right: 10px;
 }
 </style>
